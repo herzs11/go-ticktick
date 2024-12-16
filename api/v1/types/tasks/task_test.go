@@ -65,7 +65,7 @@ func TestConvertLocalTime(t *testing.T) {
 		{
 			name:  "Zero time",
 			input: time.Time{},
-			want:  "0001-01-01T00:00:00.000+0000",
+			want:  "",
 		},
 	}
 

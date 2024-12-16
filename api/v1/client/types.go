@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"go-ticktick/api/v1/types/project"
-	"go-ticktick/api/v1/types/tasks"
+	"github.com/herzs11/go-ticktick/api/v1/types/project"
+	"github.com/herzs11/go-ticktick/api/v1/types/tasks"
 )
 
 type projectParams struct {
