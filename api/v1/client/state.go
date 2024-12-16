@@ -6,7 +6,7 @@ import (
 	"os"
 	"sync"
 
-	"go-ticktick/api/v1/types/project"
+	"github.com/herzs11/go-ticktick/api/v1/types/project"
 )
 
 type TickTickState struct {

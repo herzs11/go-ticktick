@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"go-ticktick/api/v1/types/project"
+	"github.com/herzs11/go-ticktick/api/v1/types/project"
 )
 
 func (c *TickTickClient) CreateNewProjectFromName(name string) (*project.Project, error) {

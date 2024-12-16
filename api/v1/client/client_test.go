@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/herzs11/go-ticktick/api/v1/types/project"
+	"github.com/herzs11/go-ticktick/api/v1/types/tasks"
 	"github.com/joho/godotenv"
 	"github.com/zalando/go-keyring"
-	"go-ticktick/api/v1/types/project"
-	"go-ticktick/api/v1/types/tasks"
 )
 
 func getAuthenticatedClient(t *testing.T) *TickTickClient {
@@ -34,7 +34,7 @@ func getAuthenticatedClient(t *testing.T) *TickTickClient {
 }
 
 func TestOauth2GetToken(t *testing.T) {
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load("../../../.env")
 	if err != nil {
 		t.Log("Could not load .env file")
 	}
@@ -65,23 +65,10 @@ func TestOauth2GetToken(t *testing.T) {
 }
 
 func TestTokenFileStore(t *testing.T) {
-	err := godotenv.Load("../../../.env")
-	if err != nil {
-		t.Log("Could not load .env file")
-	}
-	testClientID := os.Getenv("TT_CLIENT_ID")
-	if testClientID == "" {
-		t.Fatal("TickTickClient id must be set in the TT_CLIENT_ID environment variable")
-	}
-	token := oauthToken{
-		AccessToken: "ffffffff-ffff-ffff-ffff-ffffffffffff",
-		TokenType:   "bearer",
-		ExpiresIn:   15125617,
-		Scope:       "tasks:read tasks:write",
-	}
-	expTS := time.Second * time.Duration(token.ExpiresIn)
-	token.ExpiresTime = time.Now().Add(expTS).Unix()
-	err = storeTokenFile(token)
+	c := getAuthenticatedClient(t)
+	expTS := time.Second * time.Duration(c.token.ExpiresIn)
+	c.token.ExpiresTime = time.Now().Add(expTS).Unix()
+	err := storeTokenFile(c.token)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,43 +78,29 @@ func TestTokenFileStore(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	if retrievedToken.AccessToken != token.AccessToken {
+	if retrievedToken.AccessToken != c.token.AccessToken {
 		log.Fatal("Retrieved token does not equal created token")
 	}
 
-	if retrievedToken.ExpiresTime != token.ExpiresTime {
+	if retrievedToken.ExpiresTime != c.token.ExpiresTime {
 		log.Fatal("Retrieved expiry time != created expires time")
 	}
 }
 
 func TestTokenKeyringStore(t *testing.T) {
-	err := godotenv.Load("../../../.env")
-	if err != nil {
-		t.Log("Could not load .env file")
-	}
-	testClientID := os.Getenv("TT_CLIENT_ID")
-	if testClientID == "" {
-		t.Fatal("TickTickClient id must be set in the TT_CLIENT_ID environment variable")
-	}
-	token := oauthToken{
-		AccessToken: "ffffffff-ffff-ffff-ffff-ffffffffffff",
-		TokenType:   "bearer",
-		ExpiresIn:   15125617,
-		Scope:       "tasks:read tasks:write",
-	}
-	expTS := time.Second * time.Duration(token.ExpiresIn)
-	token.ExpiresTime = time.Now().Add(expTS).Unix()
-	data, err := json.Marshal(token)
+	c := getAuthenticatedClient(t)
+
+	data, err := json.Marshal(&c.token)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	service := "go-ticktick"
-	err = keyring.Set(service, testClientID, string(data))
+	service := "go-ticktick-test"
+	err = keyring.Set(service, c.ClientId, string(data))
 	if err != nil {
 		t.Fatal(err)
 	}
-	secret, err := keyring.Get(service, testClientID)
+	secret, err := keyring.Get(service, c.ClientId)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -138,11 +111,11 @@ func TestTokenKeyringStore(t *testing.T) {
 		t.Fatalf("Unable to unmarshal data: %s", err.Error())
 	}
 
-	if token.AccessToken != retrievedToken.AccessToken {
-		t.Fatalf("Expected token %s, got %s", token.AccessToken, retrievedToken.AccessToken)
+	if c.token.AccessToken != retrievedToken.AccessToken {
+		t.Fatalf("Expected token %s, got %s", c.token.AccessToken, retrievedToken.AccessToken)
 	}
-	if token.ExpiresTime != retrievedToken.ExpiresTime {
-		t.Fatalf("Expected expTime %d, got %d", token.ExpiresTime, retrievedToken.ExpiresTime)
+	if c.token.ExpiresTime != retrievedToken.ExpiresTime {
+		t.Fatalf("Expected expTime %d, got %d", c.token.ExpiresTime, retrievedToken.ExpiresTime)
 	}
 }
 

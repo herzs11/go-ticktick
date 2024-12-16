@@ -3,7 +3,7 @@ package project
 import (
 	"encoding/json"
 
-	"go-ticktick/api/v1/types/tasks"
+	"github.com/herzs11/go-ticktick/api/v1/types/tasks"
 )
 
 type ViewMode int

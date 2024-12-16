@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"go-ticktick/api/v1/types/project"
-	"go-ticktick/api/v1/types/tasks"
+	"github.com/herzs11/go-ticktick/api/v1/types/project"
+	"github.com/herzs11/go-ticktick/api/v1/types/tasks"
 )
 
 func (c *TickTickClient) getTaskByProjectIdAndTaskID(projectID, taskID string) (*tasks.Task, error) {

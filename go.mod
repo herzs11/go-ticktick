@@ -1,4 +1,4 @@
-module go-ticktick
+module github.com/herzs11/go-ticktick
 
 go 1.23.1
 
