@@ -1,0 +1,523 @@
+{
+  "checkPoint": 1734223054959,
+  "syncTaskBean": {
+    "update": [
+      {
+        "id": "675396928f0817445d3d368a",
+        "projectId": "inbox123471446",
+        "sortOrder": -8796142305280,
+        "title": "Louise Porter's birthday",
+        "content": "",
+        "desc": "",
+        "startDate": "2025-05-24T04:00:00.000+0000",
+        "dueDate": "2025-05-24T04:00:00.000+0000",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": true,
+        "reminders": [],
+        "repeatFlag": "RRULE:FREQ=YEARLY",
+        "exDate": [],
+        "priority": 0,
+        "status": 0,
+        "items": [],
+        "progress": 0,
+        "modifiedTime": "2024-12-07T05:53:21.000+0000",
+        "etag": "wjuq5lv2",
+        "deleted": 0,
+        "createdTime": "2024-12-07T00:28:02.974+0000",
+        "creator": 123471446,
+        "repeatFrom": "2",
+        "tags": [
+          "gcal"
+        ],
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "TEXT"
+      },
+      {
+        "id": "674ce9748f08cfcad68d8459",
+        "projectId": "inbox123471446",
+        "sortOrder": -4398095794176,
+        "title": "Payday",
+        "content": "",
+        "desc": "",
+        "startDate": "2024-12-25T13:00:00.000+0000",
+        "dueDate": "2024-12-25T13:30:00.000+0000",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": false,
+        "reminders": [
+          {
+            "id": "67598aac8f0875d1ae23251f",
+            "trigger": "TRIGGER:-PT10M"
+          }
+        ],
+        "repeatFlag": "RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=WE",
+        "exDate": [],
+        "priority": 0,
+        "status": 0,
+        "items": [],
+        "progress": 0,
+        "modifiedTime": "2024-12-11T12:50:10.000+0000",
+        "etag": "1wg86vmz",
+        "deleted": 0,
+        "createdTime": "2024-12-01T22:55:48.454+0000",
+        "creator": 123471446,
+        "repeatFrom": "2",
+        "tags": [
+          "gcal"
+        ],
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "TEXT"
+      },
+      {
+        "id": "674ce9778f088904ce448cbe",
+        "projectId": "inbox123471446",
+        "sortOrder": -7696630677504,
+        "title": "Tech Networking Boston",
+        "content": "For details, go here:\nhttps://www.eventbrite.com/e/tech-networking-boston-tickets-1095180076089",
+        "desc": "",
+        "startDate": "2024-12-18T23:00:00.000+0000",
+        "dueDate": "2024-12-19T02:00:00.000+0000",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": false,
+        "reminders": [
+          {
+            "id": "674ceb468f08cfcad68dac90",
+            "trigger": "TRIGGER:-PT10M"
+          }
+        ],
+        "exDate": [],
+        "priority": 0,
+        "status": 0,
+        "items": [],
+        "progress": 0,
+        "modifiedTime": "2024-12-01T23:03:29.000+0000",
+        "etag": "yaamisbl",
+        "deleted": 0,
+        "createdTime": "2024-12-01T22:55:51.332+0000",
+        "creator": 123471446,
+        "tags": [
+          "gcal"
+        ],
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "TEXT"
+      },
+      {
+        "id": "674ce9758f0830f264e55c8a",
+        "projectId": "inbox123471446",
+        "sortOrder": -5497607421952,
+        "title": "Portland Office Days",
+        "content": "",
+        "desc": "",
+        "startDate": "2024-12-18T05:00:00.000+0000",
+        "dueDate": "2024-12-20T05:00:00.000+0000",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": true,
+        "reminders": [],
+        "repeatFlag": "RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=WE",
+        "exDate": [],
+        "priority": 0,
+        "status": 0,
+        "items": [],
+        "progress": 0,
+        "modifiedTime": "2024-12-01T23:13:19.000+0000",
+        "etag": "z3qovbg6",
+        "deleted": 0,
+        "createdTime": "2024-12-01T22:55:49.593+0000",
+        "creator": 123471446,
+        "repeatFrom": "2",
+        "tags": [
+          "gcal"
+        ],
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "TEXT"
+      },
+      {
+        "id": "6604bed05250b04bff1883aa",
+        "projectId": "inbox123471446",
+        "sortOrder": -196608,
+        "title": "Take the trash out ~",
+        "content": "",
+        "desc": "",
+        "startDate": "2024-12-18T05:00:00.000+0000",
+        "dueDate": "2024-12-18T05:00:00.000+0000",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": true,
+        "reminders": [
+          {
+            "id": "675a290a8f08eabaffa0fa01",
+            "trigger": "TRIGGER:P0DT19H0M0S"
+          }
+        ],
+        "repeatFirstDate": "2024-10-02T04:00:00.000+0000",
+        "repeatFlag": "RRULE:FREQ=WEEKLY;WKST=SU;INTERVAL=1;BYDAY=WE",
+        "exDate": [],
+        "completedUserId": 123471446,
+        "repeatTaskId": "6604bed05250b04bff1883aa",
+        "priority": 1,
+        "status": 0,
+        "items": [],
+        "progress": 0,
+        "modifiedTime": "2024-12-12T00:06:29.000+0000",
+        "etag": "vv7z56b2",
+        "deleted": 0,
+        "createdTime": "2024-03-28T00:50:24.000+0000",
+        "creator": 123471446,
+        "repeatFrom": "2",
+        "attachments": [],
+        "commentCount": 0,
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "TEXT",
+        "imgMode": 0
+      },
+      {
+        "id": "66102673f0ec1103943805e0",
+        "projectId": "inbox123471446",
+        "sortOrder": -1099525849088,
+        "title": "Monthly update email",
+        "content": "Make sure to add expired signal filter",
+        "desc": "Make sure to add expired signal filter",
+        "startDate": "2024-12-18T05:00:00.000+0000",
+        "dueDate": "2024-12-18T05:00:00.000+0000",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": true,
+        "reminders": [],
+        "repeatFirstDate": "2024-08-18T04:00:00.000+0000",
+        "repeatFlag": "RRULE:FREQ=MONTHLY;INTERVAL=1",
+        "exDate": [],
+        "completedUserId": 123471446,
+        "repeatTaskId": "66102673f0ec1103943805e0",
+        "priority": 0,
+        "status": 0,
+        "items": [
+          {
+            "id": "66438774e14151f50bdd7b07",
+            "status": 0,
+            "title": "Workday Webscrape",
+            "sortOrder": 0,
+            "startDate": null,
+            "isAllDay": false,
+            "timeZone": "America/New_York",
+            "snoozeReminderTime": null,
+            "completedTime": null
+          },
+          {
+            "id": "6643877b369791f50bdd7bc5",
+            "status": 0,
+            "title": "ZoomInfo",
+            "sortOrder": 1048576,
+            "startDate": null,
+            "isAllDay": false,
+            "timeZone": "America/New_York",
+            "snoozeReminderTime": null,
+            "completedTime": null
+          },
+          {
+            "id": "6643877edc7cd1f50bdd7c13",
+            "status": 0,
+            "title": "ADP Webscrape",
+            "sortOrder": 2097152,
+            "startDate": null,
+            "isAllDay": false,
+            "timeZone": "America/New_York",
+            "snoozeReminderTime": null,
+            "completedTime": null
+          },
+          {
+            "id": "66438780dc60d1f50bdd7c51",
+            "status": 0,
+            "title": "DemandBase tech export",
+            "sortOrder": 3145728,
+            "startDate": null,
+            "isAllDay": false,
+            "timeZone": "America/New_York",
+            "snoozeReminderTime": null,
+            "completedTime": null
+          },
+          {
+            "id": "66438788e2c991f50bdd7d2b",
+            "status": 0,
+            "title": "Enlyft?",
+            "sortOrder": 4194304,
+            "startDate": null,
+            "isAllDay": false,
+            "timeZone": "America/New_York",
+            "snoozeReminderTime": null,
+            "completedTime": null
+          },
+          {
+            "id": "664387a3cbfed1f50bdd7e35",
+            "status": 0,
+            "title": "Create Email",
+            "sortOrder": 5242880,
+            "startDate": null,
+            "isAllDay": false,
+            "timeZone": "America/New_York",
+            "snoozeReminderTime": null,
+            "completedTime": null
+          }
+        ],
+        "progress": 0,
+        "modifiedTime": "2024-12-04T20:06:54.000+0000",
+        "etag": "o47azzbh",
+        "deleted": 0,
+        "createdTime": "2024-04-05T16:27:31.000+0000",
+        "creator": 123471446,
+        "repeatFrom": "0",
+        "tags": [
+          "work"
+        ],
+        "attachments": [],
+        "commentCount": 0,
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "CHECKLIST",
+        "imgMode": 0
+      },
+      {
+        "id": "6604bd5f5250b04bff188293",
+        "projectId": "inbox123471446",
+        "sortOrder": 131072,
+        "title": "Pay rent",
+        "content": "",
+        "desc": "",
+        "startDate": "2024-12-15T17:00:00.000+0000",
+        "dueDate": "2024-12-15T18:00:00.000+0000",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": false,
+        "reminders": [
+          {
+            "id": "674ce9828f088904ce448d67",
+            "trigger": "TRIGGER:-PT1440M"
+          },
+          {
+            "id": "674ce9828f088904ce448d68",
+            "trigger": "TRIGGER:-PT0S"
+          }
+        ],
+        "repeatFirstDate": "2024-10-15T16:00:00.000+0000",
+        "repeatFlag": "RRULE:FREQ=MONTHLY;INTERVAL=1",
+        "exDate": [],
+        "completedUserId": 123471446,
+        "repeatTaskId": "6604bd5f5250b04bff188293",
+        "priority": 5,
+        "status": 0,
+        "items": [],
+        "progress": 0,
+        "modifiedTime": "2024-11-14T17:02:06.000+0000",
+        "etag": "qz8rszuh",
+        "deleted": 0,
+        "createdTime": "2024-03-28T00:44:15.000+0000",
+        "creator": 123471446,
+        "repeatFrom": "2",
+        "attachments": [],
+        "commentCount": 0,
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "TEXT"
+      },
+      {
+        "id": "66c346239ca6298eeaaa7fb6",
+        "projectId": "inbox123471446",
+        "sortOrder": -3298584166400,
+        "title": "Jobscan.co",
+        "desc": "",
+        "timeZone": "America/New_York",
+        "isFloating": false,
+        "isAllDay": false,
+        "reminder": "",
+        "reminders": [],
+        "repeatFirstDate": "2024-08-19T04:00:00.000+0000",
+        "exDate": [],
+        "repeatTaskId": "66c346239ca6298eeaaa7fb6",
+        "priority": 0,
+        "status": 0,
+        "items": [],
+        "progress": 0,
+        "modifiedTime": "2024-08-19T13:18:40.000+0000",
+        "etag": "fgzye7th",
+        "deleted": 0,
+        "createdTime": "2024-08-19T13:18:27.000+0000",
+        "creator": 123471446,
+        "repeatFrom": "2",
+        "attachments": [],
+        "commentCount": 0,
+        "focusSummaries": [],
+        "columnId": "6604bd155250b04bff18821f",
+        "kind": "TEXT",
+        "annoyingAlert": -1
+      }
+    ],
+    "tagUpdate": [],
+    "delete": [],
+    "add": [],
+    "empty": false
+  },
+  "projectProfiles": [],
+  "projectGroups": null,
+  "filters": null,
+  "tags": [
+    {
+      "name": "bill",
+      "rawName": "bill",
+      "label": "Bill",
+      "sortOrder": -65536,
+      "sortType": "project",
+      "color": "#FFD966",
+      "etag": "mwp2kn3a",
+      "type": 1,
+      "sortOption": {
+        "groupBy": "project",
+        "orderBy": "dueDate"
+      },
+      "viewMode": "list",
+      "timeline": {
+        "range": null,
+        "sortType": null,
+        "sortOption": {
+          "groupBy": "project",
+          "orderBy": "dueDate"
+        }
+      }
+    },
+    {
+      "name": "courses",
+      "rawName": "courses",
+      "label": "Courses",
+      "sortOrder": -1114112,
+      "sortType": "project",
+      "color": "#8C5EFA",
+      "etag": "al8s4h6o",
+      "type": 1,
+      "sortOption": {
+        "groupBy": "project",
+        "orderBy": "dueDate"
+      }
+    },
+    {
+      "name": "cx",
+      "rawName": "cx",
+      "label": "CX",
+      "sortOrder": -3211264,
+      "sortType": "project",
+      "color": "#02DBB2",
+      "etag": "aiexu1p5",
+      "type": 1,
+      "sortOption": {
+        "groupBy": "project",
+        "orderBy": "dueDate"
+      }
+    },
+    {
+      "name": "gcal",
+      "rawName": "gcal",
+      "label": "GCal",
+      "sortOrder": -549759025152,
+      "sortType": "project",
+      "color": "#B6D7A8",
+      "etag": "d4b87z8v",
+      "type": 1,
+      "sortOption": {
+        "groupBy": "project",
+        "orderBy": "dueDate"
+      }
+    },
+    {
+      "name": "projects",
+      "rawName": "projects",
+      "label": "Projects",
+      "sortOrder": -2162688,
+      "sortType": "project",
+      "color": "#FFAC38",
+      "etag": "vjkq1uet",
+      "type": 1,
+      "sortOption": {
+        "groupBy": "project",
+        "orderBy": "dueDate"
+      }
+    },
+    {
+      "name": "work",
+      "rawName": "work",
+      "label": "Work",
+      "sortOrder": 0,
+      "sortType": "project",
+      "color": "#F7C989",
+      "etag": "e44yikry",
+      "type": 1,
+      "sortOption": {
+        "groupBy": "project",
+        "orderBy": "dueDate"
+      },
+      "viewMode": "list",
+      "timeline": {
+        "range": null,
+        "sortType": null,
+        "sortOption": {
+          "groupBy": "project",
+          "orderBy": "dueDate"
+        }
+      }
+    }
+  ],
+  "syncTaskOrderBean": {
+    "taskOrderByDate": {},
+    "taskOrderByPriority": {},
+    "taskOrderByProject": {}
+  },
+  "syncOrderBean": {
+    "orderByType": {
+      "projectPinned": {
+        "all": {
+          "changed": [],
+          "deleted": [
+            {
+              "id": "675686858f086bb522ad7da3",
+              "order": null,
+              "type": 1
+            },
+            {
+              "id": "675694ff8f08085877431548",
+              "order": null,
+              "type": 1
+            },
+            {
+              "id": "675695038f0817445d7441e2",
+              "order": null,
+              "type": 1
+            }
+          ]
+        }
+      }
+    }
+  },
+  "syncOrderBeanV3": {
+    "orderByType": {
+      "taskBy#dueDate|20240417_dueDate": {
+        "all": {
+          "changed": [
+            {
+              "id": "6604bed05250b04bff1883aa",
+              "order": 196609,
+              "type": 1
+            }
+          ],
+          "deleted": []
+        }
+      }
+    }
+  },
+  "inboxId": "inbox123471446",
+  "checks": null,
+  "remindChanges": []
+}
