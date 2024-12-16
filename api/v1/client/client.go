@@ -1,15 +1,15 @@
 package client
 
 import (
-	`context`
-	`encoding/json`
-	`errors`
-	`fmt`
-	`log`
-	`net/http`
-	`net/url`
-	`time`
-	
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"log"
+	"net/http"
+	"net/url"
+	"time"
+
 	"github.com/pkg/browser"
 )
 
@@ -59,7 +59,7 @@ func newOauthTokenFromString(token string) oauthToken {
 	}
 }
 
-type Oauth2Client struct {
+type TickTickClient struct {
 	ClientId          string
 	ClientSecret      string
 	RedirectURI       string
@@ -70,24 +70,20 @@ type Oauth2Client struct {
 func createAuthorizationCodeListener(authCh chan string, serv *http.Server, path string) {
 	http.HandleFunc(
 		path, func(w http.ResponseWriter, r *http.Request) {
-			// Parse the query parameters
 			queryValues, err := url.ParseQuery(r.URL.RawQuery)
 			if err != nil {
 				http.Error(w, "Failed to parse query parameters", http.StatusBadRequest)
 				return
 			}
-			
-			// Extract the authorization code
+
 			code := queryValues.Get("code")
 			if code == "" {
 				http.Error(w, "Authorization code not found", http.StatusBadRequest)
 				return
 			}
-			
-			// Send the authorization code to the main goroutine
+
 			authCh <- code
-			
-			// Respond to the user
+
 			fmt.Fprintf(w, "Successfully got authorization code from the redirected url, you may now close this window")
 		},
 	)
@@ -97,15 +93,15 @@ func createAuthorizationCodeListener(authCh chan string, serv *http.Server, path
 	}
 }
 
-func NewOauth2Client(clientID, clientSecret, redirectURI string) *Oauth2Client {
-	return &Oauth2Client{
+func NewTickTickClient(clientID, clientSecret, redirectURI string) *TickTickClient {
+	return &TickTickClient{
 		ClientId:     clientID,
 		ClientSecret: clientSecret,
 		RedirectURI:  redirectURI,
 	}
 }
 
-func (oc *Oauth2Client) getAuthURL() string {
+func (oc *TickTickClient) getAuthURL() string {
 	params := map[string]string{
 		"client_id":     oc.ClientId,
 		"response_type": "code",
@@ -119,7 +115,7 @@ func (oc *Oauth2Client) getAuthURL() string {
 	return fmt.Sprintf("%s%s?%s", OAUTH_BASE_URL, AUTHORIZATION_PAGE_ENDPOINT, values.Encode())
 }
 
-func (oc *Oauth2Client) openAuthURL() bool {
+func (oc *TickTickClient) openAuthURL() bool {
 	url := oc.getAuthURL()
 	err := browser.OpenURL(url)
 	if err != nil {
@@ -129,7 +125,7 @@ func (oc *Oauth2Client) openAuthURL() bool {
 	return true
 }
 
-func (oc *Oauth2Client) makeRedirectServer() (*http.Server, string, error) {
+func (oc *TickTickClient) makeRedirectServer() (*http.Server, string, error) {
 	rdu, err := url.Parse(oc.RedirectURI)
 	if err != nil {
 		return nil, "", err
@@ -139,7 +135,7 @@ func (oc *Oauth2Client) makeRedirectServer() (*http.Server, string, error) {
 		return nil, "", errors.New("URL does not have a port")
 	}
 	if checkPort(port) {
-	
+
 	}
 	// rdu.Path
 	serv := &http.Server{Addr: ":" + port}
@@ -147,23 +143,23 @@ func (oc *Oauth2Client) makeRedirectServer() (*http.Server, string, error) {
 		rdu.Path = "/"
 	}
 	return serv, rdu.Path, nil
-	
+
 }
 
-func (oc *Oauth2Client) getAuthorizationCode() error {
+func (oc *TickTickClient) getAuthorizationCode() error {
 	authCh := make(chan string)
 	serv, path, err := oc.makeRedirectServer()
 	if err != nil {
 		return err
 	}
-	
+
 	go createAuthorizationCodeListener(authCh, serv, path)
-	
+
 	res := oc.openAuthURL()
 	if !res {
 		return errors.New("Unable to open authorization redirect in browser")
 	}
-	
+
 	oc.authorizationCode = <-authCh
 	shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer shutdownCancel()
@@ -173,7 +169,7 @@ func (oc *Oauth2Client) getAuthorizationCode() error {
 	return nil
 }
 
-func (oc *Oauth2Client) getOauthToken() error {
+func (oc *TickTickClient) getOauthToken() error {
 	params := map[string]string{
 		"client_id":     oc.ClientId,
 		"client_secret": oc.ClientSecret,
@@ -193,9 +189,9 @@ func (oc *Oauth2Client) getOauthToken() error {
 	if err != nil {
 		return err
 	}
-	
+
 	defer resp.Body.Close()
-	
+
 	// var res map[string]interface{}
 	var res oauthToken
 	err = json.NewDecoder(resp.Body).Decode(&res)
@@ -208,21 +204,27 @@ func (oc *Oauth2Client) getOauthToken() error {
 	return nil
 }
 
-func (oc *Oauth2Client) Authenticate() error {
-	token := getTokenFromKeyring(oc.ClientId)
+func (oc *TickTickClient) Authenticate() error {
+	token, err := getTokenFromKeyring(oc.ClientId)
+	if err != nil {
+		log.Printf("Could not get token from keyring: %s\n", err.Error())
+	}
 	if token != nil {
 		oc.token = *token
 		return nil
 	}
-	
-	token = getTokenFromEnvironment()
+
+	token, err = getTokenFromFile()
+	if err != nil {
+		log.Printf("Could not get token from file")
+	}
 	if token != nil {
 		oc.token = *token
 		return nil
 	}
-	
+
 	log.Println("Cannot get valid token from cache, authenticating...")
-	err := oc.getAuthorizationCode()
+	err = oc.getAuthorizationCode()
 	if err != nil {
 		return err
 	}
@@ -234,9 +236,14 @@ func (oc *Oauth2Client) Authenticate() error {
 		return errors.New("Cannot validate token")
 	}
 	err = storeToken(oc.ClientId, oc.token)
-	if err != nil {
-		log.Println("Could not store token in keyring, save in environment variable 'TT_ACCESS_TOKEN'")
-		log.Println("Token:", oc.token.AccessToken)
+	return err
+}
+
+func (c *TickTickClient) Do(req *http.Request) (*http.Response, error) {
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.token.AccessToken))
+	if req.Method == "POST" {
+		req.Header.Set("Content-Type", "application/json")
 	}
-	return nil
+	httpClient := http.Client{}
+	return httpClient.Do(req)
 }

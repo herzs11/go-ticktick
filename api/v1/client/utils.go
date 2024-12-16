@@ -1,18 +1,23 @@
 package client
 
 import (
-	`bytes`
-	`encoding/json`
-	`io`
-	`log`
-	`net`
-	`os`
-	`strconv`
-	
-	`github.com/zalando/go-keyring`
+	"bytes"
+	"crypto/rand"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"io"
+	"log"
+	"net"
+	"os"
+	"path"
+	"regexp"
+	"strconv"
+
+	"github.com/zalando/go-keyring"
 )
 
-const OAUTH2_FILENAME = "~/.gott_auth2"
+const OAUTH2_FILENAME = ".gott_auth2"
 
 func checkPort(port string) bool {
 	// Attempt to listen on the port
@@ -26,15 +31,32 @@ func checkPort(port string) bool {
 }
 
 func storeToken(clientID string, token oauthToken) error {
+	err := storeTokenKeyring(clientID, token)
+	if err == nil {
+		return nil
+	}
+	log.Printf("Unable to store token in keyring service, saving to ~/.gott_oauth2")
+	return storeTokenFile(token)
+}
+
+func storeTokenKeyring(clientID string, token oauthToken) error {
 	data, err := json.Marshal(token)
 	if err != nil {
 		return err
 	}
-	err = keyring.Set(KEYRING_SERVICE, clientID, string(data))
+	return keyring.Set(KEYRING_SERVICE, clientID, string(data))
+}
+
+func storeTokenFile(token oauthToken) error {
+	data, err := json.Marshal(token)
 	if err != nil {
-		log.Printf("Unable to store token in keyring service, saving to ~/.gott_oauth2")
+		return err
 	}
-	file, err := os.Create(OAUTH2_FILENAME)
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+	file, err := os.Create(path.Join(home, OAUTH2_FILENAME))
 	if err != nil {
 		return err
 	}
@@ -43,54 +65,51 @@ func storeToken(clientID string, token oauthToken) error {
 	return err
 }
 
-func getTokenFromKeyring(clientID string) *oauthToken {
+func getTokenFromKeyring(clientID string) (*oauthToken, error) {
 	secret, err := keyring.Get(KEYRING_SERVICE, clientID)
 	if err != nil {
-		log.Printf("Error getting token from keyring: %s\n", err.Error())
-		return nil
+		return nil, err
 	}
 	var retrievedToken oauthToken
 	err = json.Unmarshal([]byte(secret), &retrievedToken)
 	if err != nil {
-		log.Printf("Error unmarshalling into token: %s\n", err.Error())
-		return nil
+		return nil, err
 	}
 	if !retrievedToken.validate() {
-		log.Println("Could not validate token from keyring")
-		return nil
+		return nil, errors.New("Unable to validate token from keyring")
 	}
-	return &retrievedToken
+	return &retrievedToken, nil
 }
 
-func getTokenFromFile() *oauthToken {
+func getTokenFromFile() (*oauthToken, error) {
 	authToken := &oauthToken{}
-	file, err := os.Open(OAUTH2_FILENAME)
+	home, err := os.UserHomeDir()
 	if err != nil {
-		if os.IsNotExist(err) {
-			log.Printf("Unable to get oauthtoken from file: ~/.gott_oauth2 file does not exist")
-		} else {
-			log.Printf("Unable to open file")
-		}
-		return nil
+		return nil, err
+	}
+	file, err := os.Open(path.Join(home, OAUTH2_FILENAME))
+	if err != nil {
+		return nil, err
 	}
 	err = json.NewDecoder(file).Decode(authToken)
 	if err != nil {
-		log.Printf("Unable to parse json from file")
-		return nil
+		return nil, err
 	}
 	if !authToken.validate() {
-		log.Printf("Unable to validate token, login again")
-		return nil
+		return nil, errors.New("Unable to validate token from keyring")
 	}
-	return authToken
+	return authToken, nil
 }
 
-func getTokenFromEnvironment() *oauthToken {
-	authToken := os.Getenv("TT_ACCESS_TOKEN")
-	token := newOauthTokenFromString(authToken)
-	if !token.validate() {
-		log.Println("Could not validate token from keyring")
-		return nil
+func randomHex(n int) (string, error) {
+	bytes := make([]byte, n)
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
 	}
-	return &token
+	return hex.EncodeToString(bytes), nil
+}
+
+func validateRGBHex(s string) bool {
+	matched, _ := regexp.MatchString(`^#[0-9a-fA-F]{6}$`, s)
+	return matched
 }
