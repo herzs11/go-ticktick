@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 	"time"
-
+	
 	"github.com/herzs11/go-ticktick/api/v1/types/project"
 	"github.com/herzs11/go-ticktick/api/v1/types/tasks"
 	"github.com/joho/godotenv"
@@ -56,7 +56,7 @@ func TestOauth2GetToken(t *testing.T) {
 	if checkPort("8080") {
 		t.Fatal("Port still in use")
 	}
-
+	
 	err = c.getOauthToken()
 	if err != nil {
 		t.Fatal(err)
@@ -72,16 +72,16 @@ func TestTokenFileStore(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	
 	retrievedToken, err := getTokenFromFile()
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	
 	if retrievedToken.AccessToken != c.token.AccessToken {
 		log.Fatal("Retrieved token does not equal created token")
 	}
-
+	
 	if retrievedToken.ExpiresTime != c.token.ExpiresTime {
 		log.Fatal("Retrieved expiry time != created expires time")
 	}
@@ -89,12 +89,12 @@ func TestTokenFileStore(t *testing.T) {
 
 func TestTokenKeyringStore(t *testing.T) {
 	c := getAuthenticatedClient(t)
-
+	
 	data, err := json.Marshal(&c.token)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	service := "go-ticktick-test"
 	err = keyring.Set(service, c.ClientId, string(data))
 	if err != nil {
@@ -110,7 +110,7 @@ func TestTokenKeyringStore(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unable to unmarshal data: %s", err.Error())
 	}
-
+	
 	if c.token.AccessToken != retrievedToken.AccessToken {
 		t.Fatalf("Expected token %s, got %s", c.token.AccessToken, retrievedToken.AccessToken)
 	}
@@ -121,7 +121,7 @@ func TestTokenKeyringStore(t *testing.T) {
 
 func TestOauth2Client_Authenticate(t *testing.T) {
 	c := getAuthenticatedClient(t)
-
+	
 	token, err := getTokenFromKeyring(c.ClientId)
 	if err != nil {
 		t.Fatalf("Unable to get token from keyring: %s", err.Error())
@@ -140,7 +140,7 @@ func TestCreateNewProject(t *testing.T) {
 		[]string{"Go Test8", "#0000FF"},
 	}
 	for _, s := range tests {
-
+		
 		pIn := project.Project{Name: s[0], Color: s[1]}
 		err := c.CreateNewProject(&pIn)
 		if err != nil {
@@ -158,8 +158,8 @@ func TestCreateNewProject(t *testing.T) {
 
 func TestGetAllProjects(t *testing.T) {
 	c := getAuthenticatedClient(t)
-
-	projs, err := c.GetAllProjects(false)
+	
+	projs, err := c.GetAllProjects(true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -184,9 +184,9 @@ func TestDeleteProjectById(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	time.Sleep(5 * time.Second)
-
+	
 	p2, err := c.GetProjectById(p.Id, false)
 	if err != nil {
 		t.Fatal(err)
@@ -198,14 +198,14 @@ func TestDeleteProjectById(t *testing.T) {
 
 func TestGetProjectById(t *testing.T) {
 	c := getAuthenticatedClient(t)
-
+	
 	p := project.Project{Name: "TestCreationNew"}
 	err := c.CreateNewProject(&p)
 	pRes, err := c.GetProjectById(p.Id, false)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	if pRes.Id != p.Id {
 		t.Fatalf("Expected id %s, got %s", p.Id, pRes.Id)
 	}
@@ -217,25 +217,25 @@ func TestGetProjectById(t *testing.T) {
 
 func TestUpdateProject(t *testing.T) {
 	c := getAuthenticatedClient(t)
-
+	
 	p := project.Project{Name: "TestProjectUpdate"}
 	err := c.CreateNewProject(&p)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	p.Name = "UpdatedProjectName"
 	p.ViewMode = project.Kanban
 	err = c.UpdateProject(&p)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	projRes, err := c.GetProjectById(p.Id, false)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	if p.Name != projRes.Name {
 		t.Fatalf("Expected %s, got %s", p.Name, projRes.Name)
 	}
@@ -269,16 +269,16 @@ func TestGetProjectWithTasks(t *testing.T) {
 		t.Fatal(err)
 	}
 	proj.Tasks = append(proj.Tasks, t2)
-
+	
 	projT, err := c.GetProjectById(proj.Id, true)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	if len(projT.Tasks) != 2 {
 		t.Fatalf("Expected 2 related tasks, got %d", len(projT.Tasks))
 	}
-
+	
 }
 
 func TestGetInbox(t *testing.T) {
@@ -300,7 +300,7 @@ func TestGetInbox(t *testing.T) {
 
 func TestGetTaskById(t *testing.T) {
 	c := getAuthenticatedClient(t)
-
+	
 	t1 := tasks.Task{
 		Title:    "testTask",
 		Priority: tasks.High,
@@ -319,7 +319,7 @@ func TestGetTaskById(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	task, err := c.GetTaskById(t1.Id)
 	if err != nil {
 		t.Fatal(err)
@@ -347,7 +347,7 @@ func TestGetTask(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	task := tasks.Task{
 		Id: t1.Id,
 	}
@@ -355,14 +355,14 @@ func TestGetTask(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	if task.Id != t1.Id {
 		t.Fatalf("Expected id %s, got id %s", t1.Id, task.Id)
 	}
 	if task.Title != "testTask" {
 		t.Fatalf("Expected %s, got %s", "testTask", task.Title)
 	}
-
+	
 	err = c.DeleteTask(&task)
 	if err != nil {
 		t.Fatal(err)
@@ -379,16 +379,16 @@ func TestCompleteTask(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	err = c.CompleteTask(&task)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	if task.Status.String() != "Completed" {
 		t.Fatal("Failed to update status on object")
 	}
-
+	
 	task2, err := c.GetTaskById(task.Id)
 	if err != nil {
 		t.Fatal(err)
@@ -418,18 +418,18 @@ func TestDeleteTask(t *testing.T) {
 	}
 	fmt.Printf("Created task with id %s", task.Id)
 	time.Sleep(1 * time.Second)
-
+	
 	err = c.DeleteTask(&task)
 	if err != nil {
 		t.Fatal(err)
 	}
 	time.Sleep(1 * time.Second)
-
+	
 	inbox, err = c.GetInbox()
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	for _, tsk := range inbox.Tasks {
 		if tsk.Id == task.Id {
 			t.Fatalf("Found test task with id %s", tsk.Id)
@@ -446,12 +446,12 @@ func TestCreateTask(t *testing.T) {
 		Priority: tasks.High,
 		TimeZone: "America/New_York",
 	}
-
+	
 	err := c.CreateTask(&task)
 	if err != nil {
 		t.Fatalf("Error creating task: %s", err.Error())
 	}
-
+	
 	if task.Id == "" {
 		t.Fatal("Task missing Id after creation")
 	}
@@ -476,18 +476,18 @@ func TestUpdateTask(t *testing.T) {
 		Priority: tasks.High,
 		TimeZone: "America/New_York",
 	}
-
+	
 	err := c.CreateTask(&task)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	task.Priority = tasks.Medium
 	err = c.UpdateTask(&task)
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	
 	t1, err := c.GetTaskById(task.Id)
 	if t1.Priority.String() != "Medium" {
 		t.Fatalf("Expected Priority %s, got %s", task.Priority.String(), t1.Priority.String())
