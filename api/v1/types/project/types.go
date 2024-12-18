@@ -2,7 +2,7 @@ package project
 
 import (
 	"encoding/json"
-
+	
 	"github.com/herzs11/go-ticktick/api/v1/types/tasks"
 )
 
@@ -90,6 +90,11 @@ type projectJSON struct {
 	Tasks    []tasks.Task `json:"tasks"`
 }
 
+type projectTaskJSON struct {
+	Project projectJSON  `json:"project"`
+	Tasks   []tasks.Task `json:"tasks"`
+}
+
 func (po *Project) MarshalJSON() ([]byte, error) {
 	m := &projectJSON{
 		Id:       po.Id,
@@ -103,18 +108,36 @@ func (po *Project) MarshalJSON() ([]byte, error) {
 }
 
 func (po *Project) UnmarshalJSON(data []byte) error {
-	var m projectJSON
-	err := json.Unmarshal(data, &m)
+	var (
+		m1 projectJSON
+		m2 projectTaskJSON
+	)
+	err := json.Unmarshal(data, &m1)
 	if err != nil {
 		return err
 	}
-	po.Id = m.Id
-	po.Name = m.Name
-	po.Color = m.Color
-	po.Kind = kindFromString(m.Kind)
-	po.ViewMode = viewModeFromString(m.ViewMode)
-	po.GroupId = m.GroupId
-	po.Closed = m.Closed
-	po.Tasks = m.Tasks
+	if m1.Id != "" {
+		po.Id = m1.Id
+		po.Name = m1.Name
+		po.Color = m1.Color
+		po.Kind = kindFromString(m1.Kind)
+		po.ViewMode = viewModeFromString(m1.ViewMode)
+		po.GroupId = m1.GroupId
+		po.Closed = m1.Closed
+		po.Tasks = m1.Tasks
+		return nil
+	}
+	err = json.Unmarshal(data, &m2)
+	if err != nil {
+		return err
+	}
+	po.Id = m2.Project.Id
+	po.Name = m2.Project.Name
+	po.Color = m2.Project.Color
+	po.Kind = kindFromString(m2.Project.Kind)
+	po.ViewMode = viewModeFromString(m2.Project.ViewMode)
+	po.GroupId = m2.Project.GroupId
+	po.Closed = m2.Project.Closed
+	po.Tasks = m2.Tasks
 	return nil
 }
