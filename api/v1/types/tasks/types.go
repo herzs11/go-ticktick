@@ -70,23 +70,23 @@ type ChecklistItem struct {
 }
 
 type taskJSON struct {
-	Id             string          `json:"id,omitempty"`
-	ProjectId      string          `json:"projectId,omitempty"`
-	Title          string          `json:"title,omitempty"`
-	IsAllDay       bool            `json:"isAllDay,omitempty"`
-	CompletedTime  string          `json:"completedTime,omitempty"`
-	Content        string          `json:"content,omitempty"`
-	Desc           string          `json:"desc,omitempty"`
-	DueDate        string          `json:"dueDate,omitempty"`
-	ChecklistItems []ChecklistItem `json:"items,omitempty"`
-	Priority       int             `json:"priority,omitempty"`
-	Reminders      []string        `json:"reminders,omitempty"`
-	Tags           []string        `json:"tags,omitempty"`
-	RepeatFlag     string          `json:"repeatFlag,omitempty"`
-	SortOrder      int64           `json:"sortOrder,omitempty"`
-	StartDate      string          `json:"startDate,omitempty"`
-	Status         int             `json:"status,omitempty"`
-	TimeZone       string          `json:"timeZone,omitempty"`
+	Id             string           `json:"id,omitempty"`
+	ProjectId      string           `json:"projectId,omitempty"`
+	Title          string           `json:"title,omitempty"`
+	IsAllDay       bool             `json:"isAllDay,omitempty"`
+	CompletedTime  string           `json:"completedTime,omitempty"`
+	Content        string           `json:"content,omitempty"`
+	Desc           string           `json:"desc,omitempty"`
+	DueDate        string           `json:"dueDate,omitempty"`
+	ChecklistItems []*ChecklistItem `json:"items,omitempty"`
+	Priority       int              `json:"priority,omitempty"`
+	Reminders      []string         `json:"reminders,omitempty"`
+	Tags           []string         `json:"tags,omitempty"`
+	RepeatFlag     string           `json:"repeatFlag,omitempty"`
+	SortOrder      int64            `json:"sortOrder,omitempty"`
+	StartDate      string           `json:"startDate,omitempty"`
+	Status         int              `json:"status,omitempty"`
+	TimeZone       string           `json:"timeZone,omitempty"`
 }
 
 type Task struct {
@@ -98,7 +98,7 @@ type Task struct {
 	Content        string
 	Desc           string
 	DueDate        time.Time
-	ChecklistItems []ChecklistItem
+	ChecklistItems []*ChecklistItem
 	Priority       Priority
 	Reminders      []string
 	RepeatFlag     string

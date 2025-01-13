@@ -36,7 +36,7 @@ func (c *ChecklistItem) UnmarshalJSON(data []byte) error {
 	c.CompletedTime = convertUTCString(cj.CompletedTime)
 	c.IsAllDay = cj.IsAllDay
 	c.SortOrder = cj.SortOrder
-	c.StartDate = time.Unix(cj.StartDate, 0).Local()
+	c.StartDate = time.UnixMilli(cj.StartDate).Local()
 	c.TimeZone = cj.TimeZone
 	return nil
 }

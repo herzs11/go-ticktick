@@ -55,7 +55,7 @@ func validateTask(t *tasks.Task) error {
 		t.StartDate = t.DueDate
 	}
 	for _, cl := range t.ChecklistItems {
-		if err := validateChecklistItem(&cl); err != nil {
+		if err := validateChecklistItem(cl); err != nil {
 			return err
 		}
 	}

@@ -2,7 +2,7 @@ package project
 
 import (
 	"encoding/json"
-	
+
 	"github.com/herzs11/go-ticktick/api/v1/types/tasks"
 )
 
@@ -76,23 +76,23 @@ type Project struct {
 	Kind     Kind
 	GroupId  string
 	Closed   bool
-	Tasks    []tasks.Task
+	Tasks    []*tasks.Task
 }
 
 type projectJSON struct {
-	Id       string       `json:"id,omitempty"`
-	Name     string       `json:"name"`
-	Color    string       `json:"color,omitempty"`
-	ViewMode string       `json:"viewMode"`
-	Kind     string       `json:"kind"`
-	GroupId  string       `json:"groupId,omitempty"`
-	Closed   bool         `json:"closed,omitempty"`
-	Tasks    []tasks.Task `json:"tasks"`
+	Id       string        `json:"id,omitempty"`
+	Name     string        `json:"name"`
+	Color    string        `json:"color,omitempty"`
+	ViewMode string        `json:"viewMode"`
+	Kind     string        `json:"kind"`
+	GroupId  string        `json:"groupId,omitempty"`
+	Closed   bool          `json:"closed,omitempty"`
+	Tasks    []*tasks.Task `json:"tasks"`
 }
 
 type projectTaskJSON struct {
-	Project projectJSON  `json:"project"`
-	Tasks   []tasks.Task `json:"tasks"`
+	Project projectJSON   `json:"project"`
+	Tasks   []*tasks.Task `json:"tasks"`
 }
 
 func (po *Project) MarshalJSON() ([]byte, error) {
