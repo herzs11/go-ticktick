@@ -10,7 +10,7 @@ func (c *ChecklistItem) toJSON() checklistItemJSON {
 		Id:            c.Id,
 		Title:         c.Title,
 		Status:        int(c.Status),
-		CompletedTime: convertLocalTime(c.CompletedTime),
+		CompletedTime: c.CompletedTime.UTC().Unix(),
 		IsAllDay:      c.IsAllDay,
 		SortOrder:     c.SortOrder,
 		StartDate:     c.StartDate.UTC().Unix(),
@@ -33,7 +33,7 @@ func (c *ChecklistItem) UnmarshalJSON(data []byte) error {
 	c.Id = cj.Id
 	c.Title = cj.Title
 	c.Status = Status(cj.Status)
-	c.CompletedTime = convertUTCString(cj.CompletedTime)
+	c.CompletedTime = time.UnixMilli(cj.CompletedTime).Local()
 	c.IsAllDay = cj.IsAllDay
 	c.SortOrder = cj.SortOrder
 	c.StartDate = time.UnixMilli(cj.StartDate).Local()

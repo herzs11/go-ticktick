@@ -51,7 +51,7 @@ type checklistItemJSON struct {
 	Id            string `json:"id,omitempty"`
 	Title         string `json:"title,omitempty"`
 	Status        int    `json:"status,omitempty"`
-	CompletedTime string `json:"completedTime,omitempty"`
+	CompletedTime int64  `json:"completedTime,omitempty"`
 	IsAllDay      bool   `json:"isAllDay,omitempty"`
 	SortOrder     int    `json:"sortOrder,omitempty"`
 	StartDate     int64  `json:"startDate,omitempty"`
